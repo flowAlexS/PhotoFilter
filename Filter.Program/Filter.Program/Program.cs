@@ -8,7 +8,7 @@ namespace PhotoFilter
 {
     public class Program
     {
-        private const int MaxArgumentSize = 2;
+        private const int MaxArgumentSize = 3;
 
         public static void Main(string[] args)
         {
@@ -27,12 +27,24 @@ namespace PhotoFilter
                 return;
             }
 
+            if (!ImageValidator.ImageExists(inputImage))
+            {
+                DisplayImageNotFound();
+                DisplayUsage();
+                return;
+            }
+
             Console.WriteLine("Hello World!");
         }
 
         private static void DisplayUsage()
         {
-            Console.WriteLine("Usage: dotnet run [inputFileImage] [outputFileImage]");
+            Console.WriteLine("Usage: dotnet run [inputFileImage] [outputFileImage] [desiredFilter]");
+        }
+
+        private static void DisplayImageNotFound()
+        {
+            Console.WriteLine("Image not found");
         }
     }
 }

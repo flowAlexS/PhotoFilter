@@ -16,5 +16,7 @@
 
             return false;
         }
+
+        public static bool ImageExists(string path) => File.Exists(path);
     }
 }
