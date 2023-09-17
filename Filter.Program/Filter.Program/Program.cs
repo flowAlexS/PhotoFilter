@@ -62,6 +62,7 @@ namespace PhotoFilter
             Console.WriteLine("Available Filters:");
             Console.WriteLine("BlackAndWhite");
             Console.WriteLine("Sepia");
+            Console.WriteLine("Edge");
         }
     }
 }
