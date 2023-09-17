@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace Filter
@@ -68,50 +69,22 @@ namespace Filter
                 _ => FilterType.None,
             };
 
-        private int CalculateBlackAndWhiteValue(int r, int g, int b)
+        private int CalculateBlackAndWhiteValue(int r, int g, int b) => ValidPixel((r + g + b) / 3);
+
+        private int GetNewRedSepia(int r, int g, int b) => ValidPixel(Convert.ToInt32(0.393 * r + 0.769 * g + 0.189 * b));
+
+        private int GetNewGreenSepia(int r, int g, int b) => ValidPixel(Convert.ToInt32(0.349 * r + 0.686 * g + 0.168 * b));
+
+        private int GetNewBlueSepia(int r, int g, int b) => ValidPixel(Convert.ToInt32(0.272 * r + 0.534 * g + 0.131 * b));
+
+        private int ValidPixel(int pixel)
         {
-            int newValue = (r + g + b) / 3;
-            
-            if (newValue < MinRGBValue)
+            if (pixel < MinRGBValue)
             {
                 return MinRGBValue;
             }
 
-            return newValue > MaxRGBValue ? 
-                MaxRGBValue : newValue;
-        }
-
-        private int GetNewRedSepia(int r, int g, int b)
-        {
-            int newRed = Convert.ToInt32(0.393 * r + 0.769 * g + 0.189 * b);
-            if (newRed < MinRGBValue)
-            {
-                return MinRGBValue;
-            }
-
-            return newRed > MaxRGBValue ? MaxRGBValue : newRed;
-        }
-
-        private int GetNewGreenSepia(int r, int g, int b)
-        {
-            int newGreen = Convert.ToInt32(0.349 * r + 0.686 * g + 0.168 * b);
-            if (newGreen < MinRGBValue)
-                {
-                    return MinRGBValue;
-                }
-            
-            return newGreen > MaxRGBValue ? MaxRGBValue : newGreen;
-        }
-
-        private int GetNewBlueSepia(int r, int g, int b)
-        {
-            int newBlue = Convert.ToInt32(0.272 * r + 0.534 * g + 0.131 * b);
-            if (newBlue < MinRGBValue)
-            {
-                return MinRGBValue;
-            }
-
-            return newBlue > MaxRGBValue ? MaxRGBValue : newBlue;
+            return pixel > MaxRGBValue ? MaxRGBValue : pixel;   
         }
     }
 }
