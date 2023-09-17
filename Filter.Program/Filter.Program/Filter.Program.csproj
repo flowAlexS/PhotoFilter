@@ -33,6 +33,7 @@
 	
   <ItemGroup>
     <ProjectReference Include="..\Filter.Validator\Filter.Validator.csproj" />
+    <ProjectReference Include="..\Filter\Filter.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using Filter.Validator;
+﻿using Filter;
+using Filter.Validator;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
@@ -34,6 +35,14 @@ namespace PhotoFilter
                 return;
             }
 
+            var imageToFilter = new Filter.Filter(inputImage, outputImage, args[2]);
+            if (!imageToFilter.HasFilter)
+            {
+                DisplayFilters();
+                DisplayUsage();
+                return;
+            }
+
             Console.WriteLine("Hello World!");
         }
 
@@ -45,6 +54,12 @@ namespace PhotoFilter
         private static void DisplayImageNotFound()
         {
             Console.WriteLine("Image not found");
+        }
+
+        private static void DisplayFilters()
+        {
+            Console.WriteLine("Available Filters: ");
+            Console.WriteLine("BlackAndWhite");
         }
     }
 }
