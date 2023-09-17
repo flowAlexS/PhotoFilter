@@ -43,7 +43,8 @@ namespace PhotoFilter
                 return;
             }
 
-            Console.WriteLine("Hello World!");
+            imageToFilter.GetFilteredImage();
+            Console.WriteLine($"Imaged filtered to {outputImage}");
         }
 
         private static void DisplayUsage()
