@@ -59,8 +59,9 @@ namespace PhotoFilter
 
         private static void DisplayFilters()
         {
-            Console.WriteLine("Available Filters: ");
+            Console.WriteLine("Available Filters:");
             Console.WriteLine("BlackAndWhite");
+            Console.WriteLine("Sepia");
         }
     }
 }
