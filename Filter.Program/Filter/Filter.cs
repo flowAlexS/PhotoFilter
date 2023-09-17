@@ -25,51 +25,39 @@ namespace Filter
         {
             var image = new Bitmap(inputPath);
 
-            switch (filterType)
-            {
-                case FilterType.BlackAndWhite:
-                    FilterBlackAndWhite(image);
-                    return;
-                case FilterType.Sepia:
-                    FilterSepia(image);
-                    return;
-                default:
-                    return;
-            }
-        }
-
-        private void FilterSepia(Bitmap image)
-        {
             for (int x = 0; x < image.Width; x++)
             {
                 for (int y = 0; y < image.Height; y++)
                 {
-                    Color pixelColor = image.GetPixel(x, y);
-                    int newRed = GetNewRedSepia(pixelColor.R, pixelColor.G, pixelColor.B);
-                    int newGreen = GetNewGreenSepia(pixelColor.R, pixelColor.G, pixelColor.B);
-                    int newBlue = GetNewBlueSepia(pixelColor.R, pixelColor.G, pixelColor.B);
-                    Color newPixel = Color.FromArgb(newRed, newGreen, newBlue);
-                    image.SetPixel(x, y, newPixel);
+                    switch (filterType)
+                    {
+                        case FilterType.BlackAndWhite: 
+                            image.SetPixel(x, y, GetBlackAndWhitePixel(image, image.GetPixel(x, y)));
+                            break;
+                        case FilterType.Sepia:
+                            image.SetPixel(x, y, GetSepiaPixel(image, image.GetPixel(x, y)));
+                            break;
+                        _:
+                            return;
+                    }
                 }
             }
 
             image.Save(outputPath);
         }
 
-        private void FilterBlackAndWhite(Bitmap image)
+        private Color GetBlackAndWhitePixel(Bitmap image, Color pixel)
         {
-            for (int x = 0; x < image.Width; x++)
-            {
-                for (int y = 0; y < image.Height; y++)
-                {
-                    Color pixelColor = image.GetPixel(x, y);
-                    int newValue = CalculateBlackAndWhiteValue(pixelColor.R, pixelColor.G, pixelColor.B);
-                    Color newPixel = Color.FromArgb(newValue, newValue, newValue);
-                    image.SetPixel(x, y, newPixel);
-                }
-            }
+            int newValue = CalculateBlackAndWhiteValue(pixel.R, pixel.G, pixel.B);
+            return Color.FromArgb(newValue, newValue, newValue);
+        }
 
-            image.Save(outputPath);
+        private Color GetSepiaPixel(Bitmap image, Color pixel)
+        {
+            int newRed = GetNewRedSepia(pixel.R, pixel.G, pixel.B);
+            int newGreen = GetNewGreenSepia(pixel.R, pixel.G, pixel.B);
+            int newBlue = GetNewBlueSepia(pixel.R, pixel.G, pixel.B);
+            return Color.FromArgb(newRed, newGreen, newBlue);
         }
 
         private static FilterType GetFilterType(string filterType)
